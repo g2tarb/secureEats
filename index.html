@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob: data:;">
+  <title>SecurEats</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- VIDEO BACKGROUND -->
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="img/videoFondSite.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
+
+  <!-- HOME -->
+  <div id="home-screen" class="screen active">
+    <div class="header">
+      <h1 class="header-title"><img src="img/burger_logo.png" alt="" class="header-logo"> SecurEats</h1>
+      <button class="header-btn" id="btn-profile">&#128100;</button>
+    </div>
+    <!-- Animated taglines -->
+    <div class="tagline-wrap">
+      <div class="tagline-slider" id="tagline-slider">
+        <span class="tagline">Une petite faim ? &#127828;</span>
+        <span class="tagline">Une grosse dalle ? &#128293;</span>
+        <span class="tagline">Un creux &agrave; minuit ? &#127769;</span>
+        <span class="tagline">On g&egrave;re. &#129316;</span>
+      </div>
+    </div>
+    <div class="secure-reminder">
+      <span>&#128274;</span> Vos infos restent sur votre tel &bull; Pas de compte obligatoire &bull; Paiement au livreur
+    </div>
+
+    <div class="section-label">&#11088; Best sellers</div>
+    <div class="carousel-wrapper"><div class="carousel" id="bestseller-carousel"></div></div>
+    <div class="section-label">&#9889; Commander</div>
+    <div class="quick-actions">
+      <button class="quick-card" data-mode="livraison"><span class="qa-icon">&#128666;</span><span class="qa-label">Livraison</span><span class="qa-sub">30-45 min</span></button>
+      <button class="quick-card" data-mode="collect"><span class="qa-icon">&#127939;</span><span class="qa-label">Click &amp; Collect</span><span class="qa-sub">15-20 min</span></button>
+      <button class="quick-card" data-mode="surplace"><span class="qa-icon">&#127869;</span><span class="qa-label">Sur place</span><span class="qa-sub">Service table</span></button>
+    </div>
+    <div class="section-label" id="recent-label" style="display:none">&#128230; Mes commandes</div>
+    <div class="delivery-list" id="delivery-list"></div>
+  </div>
+
+  <!-- MENU -->
+  <div id="menu-screen" class="screen">
+    <div class="header"><button class="back-btn" id="menu-back">&#8249;</button><h1 class="header-title">Menu</h1><button class="header-btn cart-header-btn" id="menu-cart-btn">&#128722;<span class="mini-badge" id="menu-badge">0</span></button></div>
+    <div class="cat-tabs" id="cat-tabs">
+      <button class="cat-tab active" data-cat="burgers">&#127828; Burgers</button>
+      <button class="cat-tab" data-cat="sides">&#127839; Sides</button>
+      <button class="cat-tab" data-cat="desserts">&#127849; Desserts</button>
+      <button class="cat-tab" data-cat="boissons">&#129380; Boissons</button>
+    </div>
+    <div class="app-menu-grid" id="app-menu-grid"></div>
+    <div class="floating-cart" id="floating-cart">
+      <div class="floating-cart-info"><span class="floating-cart-count" id="fc-count">0</span><span class="floating-cart-total" id="fc-total">0.00 &euro;</span></div>
+      <button class="floating-cart-btn" id="fc-btn">Panier &#8250;</button>
+    </div>
+  </div>
+
+  <!-- CART -->
+  <div id="cart-screen" class="screen">
+    <div class="header"><button class="back-btn" id="cart-back">&#8249;</button><h1 class="header-title">Panier</h1><div style="width:40px"></div></div>
+    <div class="cart-list" id="cart-list"></div>
+    <div class="cart-summary" id="cart-summary">
+      <div class="cart-sum-row"><span>Sous-total</span><span id="cs-subtotal">0.00 &euro;</span></div>
+      <div class="cart-sum-row" id="cs-fee-row"><span>Livraison</span><span id="cs-fee">2.99 &euro;</span></div>
+      <div class="cart-sum-row total"><span>Total</span><span id="cs-total">0.00 &euro;</span></div>
+    </div>
+    <div style="padding:0 20px 120px;"><button class="btn-gold-full" id="btn-to-mode">Continuer</button></div>
+  </div>
+
+  <!-- MODE -->
+  <div id="mode-screen" class="screen">
+    <div class="header"><button class="back-btn" id="mode-back">&#8249;</button><h1 class="header-title">R&eacute;cup&eacute;ration</h1><div style="width:40px"></div></div>
+    <div class="mode-selection">
+      <button class="mode-card" data-mode="livraison"><span class="mode-icon">&#128666;</span><div><div class="mode-label">Livraison</div><div class="mode-desc">Chez vous en 30-45 min &bull; Vous payez au livreur</div></div></button>
+      <button class="mode-card" data-mode="collect"><span class="mode-icon">&#127939;</span><div><div class="mode-label">Click &amp; Collect</div><div class="mode-desc">Pr&ecirc;t en 15-20 min &bull; Vous r&eacute;cup&eacute;rez au comptoir</div></div></button>
+      <button class="mode-card" data-mode="surplace"><span class="mode-icon">&#127869;</span><div><div class="mode-label">Sur place</div><div class="mode-desc">On vous sert &agrave; table</div></div></button>
+    </div>
+  </div>
+
+  <!-- CHECKOUT -->
+  <div id="checkout-screen" class="screen">
+    <div class="header"><button class="back-btn" id="checkout-back">&#8249;</button><h1 class="header-title" id="checkout-title">Vos infos</h1><div style="width:40px"></div></div>
+    <div class="form-wrap">
+      <div class="chosen-mode-bar" id="chosen-mode-bar"></div>
+      <div class="form-group"><label class="form-label">Pr&eacute;nom</label><input class="form-input" id="f-name" type="text" placeholder="Votre pr&eacute;nom"></div>
+      <div class="form-group"><label class="form-label">T&eacute;l&eacute;phone</label><input class="form-input" id="f-phone" type="tel" placeholder="+33 6 12 34 56 78"></div>
+      <div class="form-group" id="fg-address"><label class="form-label">Adresse de livraison</label><textarea class="form-textarea" id="f-address" placeholder="Adresse, code porte, &eacute;tage..."></textarea></div>
+      <div class="form-group" id="fg-table" style="display:none"><label class="form-label">N&deg; de table</label><input class="form-input" id="f-table" type="number" min="1" placeholder="12"></div>
+      <div class="form-group"><label class="form-label">Instructions</label><input class="form-input" id="f-notes" type="text" placeholder="Allergies, sans sauce..."></div>
+
+      <div class="pay-info" id="pay-info">
+        <span class="pay-info-icon">&#128179;</span>
+        <div><strong>Vous payez au livreur</strong><br>CB ou esp&egrave;ces &agrave; la porte. Pas besoin d'enregistrer votre carte.</div>
+      </div>
+
+      <div class="order-total-bar"><span>Total</span><span id="checkout-total">0.00 &euro;</span></div>
+      <button class="btn-gold-full" id="btn-confirm">&#9989; Confirmer la commande</button>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION -->
+  <div id="confirm-screen" class="screen">
+    <div class="confirm-wrap">
+      <div class="confirm-check">&#9989;</div>
+      <h1 class="confirm-title">Commande confirm&eacute;e !</h1>
+      <p class="confirm-id" id="confirm-id">#XXXXXXXX</p>
+      <div class="confirm-card" id="confirm-card"></div>
+      <div class="confirm-eta" id="confirm-eta">
+        <span class="eta-icon">&#128666;</span>
+        <div><div class="eta-label">Estimation</div><div class="eta-time" id="eta-time"></div></div>
+      </div>
+      <p class="confirm-note" id="confirm-note"></p>
+      <div class="confirm-qr-wrap">
+        <p class="confirm-qr-label">QR code s&eacute;curis&eacute; AES-256</p>
+        <div class="qr-container-sm"><canvas id="qr-canvas"></canvas></div>
+      </div>
+      <div class="confirm-share-section">
+        <p class="confirm-share-label">&#127873; Un pote qui commande sur Uber ? Rendez-lui service.</p>
+        <button class="btn-gold-full" id="btn-share-app">Envoyer le lien &agrave; un ami</button>
+      </div>
+      <button class="btn-outline" id="btn-go-home">Retour &agrave; l'accueil</button>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="profile-screen" class="screen">
+    <div class="header"><button class="back-btn" id="profile-back">&#8249;</button><h1 class="header-title">Profil</h1><div style="width:40px"></div></div>
+    <div class="profile-wrap">
+      <div class="profile-avatar" id="profile-avatar">?</div>
+      <div class="profile-name" id="profile-name">Invit&eacute;</div>
+      <p class="profile-sub">Cr&eacute;ez un compte pour l'historique et le parrainage</p>
+      <div class="form-group"><label class="form-label">Pr&eacute;nom</label><input class="form-input" id="p-first" type="text" placeholder="Pr&eacute;nom"></div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="p-email" type="email" placeholder="email@exemple.com"></div>
+      <div class="form-group"><label class="form-label">T&eacute;l&eacute;phone</label><input class="form-input" id="p-phone" type="tel" placeholder="+33 6 ..."></div>
+      <button class="btn-gold-full" id="btn-save-profile">Sauvegarder</button>
+    </div>
+  </div>
+
+  <!-- ITEM MODAL -->
+  <div class="modal-overlay" id="item-modal">
+    <div class="modal">
+      <div class="item-modal-emoji" id="im-emoji"></div>
+      <h2 class="modal-title" id="im-name"></h2>
+      <p class="modal-text" id="im-desc"></p>
+      <div class="item-modal-price" id="im-price"></div>
+      <div class="item-modal-qty"><button class="qty-circle" id="im-minus">&minus;</button><span class="qty-num" id="im-qty">1</span><button class="qty-circle" id="im-plus">+</button></div>
+      <button class="btn-gold-full" id="im-add">Ajouter</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="bnav-item active" data-tab="home"><span class="bnav-icon">&#127968;</span><span class="bnav-label">Accueil</span></button>
+    <button class="bnav-item" data-tab="menu"><span class="bnav-icon">&#127828;</span><span class="bnav-label">Menu</span></button>
+    <button class="bnav-item" data-tab="profile"><span class="bnav-icon">&#128100;</span><span class="bnav-label">Profil</span></button>
+  </nav>
+
+  <!-- INSTALL PROMPT -->
+  <div class="install-banner" id="install-banner">
+    <div class="install-content">
+      <img src="img/burger_logo.png" alt="" class="install-logo">
+      <div class="install-text">
+        <strong>Installer SecurEats</strong>
+        <span>Acc&egrave;s rapide, hors-ligne, comme une vraie app</span>
+      </div>
+    </div>
+    <div class="install-actions">
+      <button class="install-btn" id="btn-install">Installer</button>
+      <button class="install-dismiss" id="btn-install-dismiss">Plus tard</button>
+    </div>
+  </div>
+
+  <!-- iOS INSTALL GUIDE -->
+  <div class="modal-overlay" id="ios-modal">
+    <div class="modal ios-guide">
+      <img src="img/burger_logo.png" alt="" class="install-logo" style="margin:0 auto 12px;display:block;">
+      <h2 class="modal-title">Installer SecurEats</h2>
+      <div class="ios-steps">
+        <div class="ios-step"><span class="ios-num">1</span> Appuyez sur <strong>Partager</strong> <span class="ios-icon">&#9757;</span></div>
+        <div class="ios-step"><span class="ios-num">2</span> Puis <strong>Sur l'&eacute;cran d'accueil</strong></div>
+        <div class="ios-step"><span class="ios-num">3</span> Puis <strong>Ajouter</strong></div>
+      </div>
+      <button class="btn-gold-full" id="btn-ios-ok">Compris</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/db.js"></script>
+  <script src="js/crypto.js"></script>
+  <script src="js/qr.js"></script>
+  <script src="js/scanner.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
